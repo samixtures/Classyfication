@@ -18,7 +18,7 @@ class App extends Component {
     }
   }
   onInputChange = (event) => {
-    console.log(event.target.value);
+    // console.log(event.target.value);
     this.setState({input: event.target.value});
     // IMAGE_URL = event.taraget.value;
     // console.log(IMAGE_URL)
@@ -34,10 +34,10 @@ class App extends Component {
     IMAGE_URL = this.imageUrl;
     const { imageUrl, input } = this.state;
     IMAGE_URL = input;
-    console.log("input is", input);
-    console.log("imageUrl is", imageUrl);
-    console.log("INPUT IS", input);
-    console.log("IMAGE URL IS", IMAGE_URL);
+    // console.log("input is", input);
+    // console.log("imageUrl is", imageUrl);
+    // console.log("INPUT IS", input);
+    // console.log("IMAGE URL IS", IMAGE_URL);
 
     // Regardless of my lack of understanding, it works with this code.
     // The image shows up updated based on the URL typed into the input bar
@@ -95,8 +95,8 @@ class App extends Component {
     // https://api.clarifai.com/v2/models/{YOUR_MODEL_ID}/outputs
     // this will default to the latest version_id
     fetch("https://api.clarifai.com/v2/models/" + MODEL_ID + "/versions/" + MODEL_VERSION_ID + "/outputs", requestOptions)
-    .then(response => response.text())
-    .then(result => console.log(result))
+    .then(response => response.json())
+    .then(result => console.log(result.outputs[0].data.concepts))
     .catch(error => console.log('error', error));
     
   }
@@ -106,8 +106,8 @@ class App extends Component {
     // For some reason imageUrl and input states are undefined regardless of what code I add anywhere
     // unless I add these few lines below
     const { imageUrl, input } = this.state;
-    console.log("input is", input);
-    console.log("imageUrl is", imageUrl);
+    // console.log("input is", input);
+    // console.log("imageUrl is", imageUrl);
     return (
       <div className="App">
         <Navigation/>
