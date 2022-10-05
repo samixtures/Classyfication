@@ -6,6 +6,7 @@ import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm'
 import Rank from './components/Rank/Rank'
 import FaceRecognition from './components/FaceRecognition/FaceRecognition'
 import Particles from './components/Particles'
+import Categories from './components/Categories/Categories'
 
 let IMAGE_URL = 'https://cdn.photographycourse.net/wp-content/uploads/2014/11/Landscape-Photography-steps.jpg';
 
@@ -22,6 +23,19 @@ class App extends Component {
     this.setState({input: event.target.value});
     // IMAGE_URL = event.taraget.value;
     // console.log(IMAGE_URL)
+  }
+
+  getNameAndPercent = (arr) => {
+    console.log(arr);
+    let res_str = [];
+    let res_int = [];
+    for (let i = 0; i < arr.length; i++) {
+      res_str.push(arr[i].name)
+      res_int.push(arr[i].value)
+    }
+    console.log(res_str);
+    console.log(res_int);
+    return res_str;
   }
   
   onButtonSubmit = () => {
@@ -96,8 +110,9 @@ class App extends Component {
     // this will default to the latest version_id
     fetch("https://api.clarifai.com/v2/models/" + MODEL_ID + "/versions/" + MODEL_VERSION_ID + "/outputs", requestOptions)
     .then(response => response.json())
-    .then(result => console.log(result.outputs[0].data.concepts))
+    .then(result => this.getNameAndPercent(result.outputs[0].data.concepts))
     .catch(error => console.log('error', error));
+
     
   }
   
@@ -118,6 +133,7 @@ class App extends Component {
         onButtonSubmit={this.onButtonSubmit}
         />
         <FaceRecognition imageUrl = {IMAGE_URL}/>
+        <Categories />
         <Particles id="tsparticles" />
   {/* {      <Navigation/>
         <Logo/>
