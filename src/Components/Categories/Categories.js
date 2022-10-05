@@ -1,11 +1,14 @@
 import React from "react";
-
-const Categories = () => {
+function displayListItems(list) {
+    // const reptiles = ["alligator", "snake", "lizard"];
+  
+    // return reptiles.map((reptile) => <li key = {reptile}>{reptile}</li>);
+    return list.map((reptile) => <li key = {reptile}>{reptile}</li>);
+  }
+const Categories = ({ category_names }) => {
     return(
         <div>
-            <div>
-                The categories are:
-            </div>
+            {displayListItems(category_names)}
         </div>
     )
 }
