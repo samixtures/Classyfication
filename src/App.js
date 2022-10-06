@@ -11,6 +11,7 @@ import Categories from './components/Categories/Categories'
 let IMAGE_URL = 'https://cdn.photographycourse.net/wp-content/uploads/2014/11/Landscape-Photography-steps.jpg';
 
 let categ_names = [];
+let categ_perc = [];
 
 class App extends Component {
   constructor() {
@@ -26,7 +27,7 @@ class App extends Component {
     // IMAGE_URL = event.taraget.value;
     // console.log(IMAGE_URL)
   }
-  getNameAndPercent = (arr) => {
+  getNames = (arr) => {
     // console.log(arr);
     let res_str = [];
     let res_int = [];
@@ -39,6 +40,22 @@ class App extends Component {
     // console.log(res_int);
     return res_str;
   }
+
+  getPerc = (arr) => {
+    // console.log(arr);
+    let res_str = [];
+    let res_int = [];
+    for (let i = 0; i < arr.length; i++) {
+      categ_perc.push(arr[i].value)
+      res_str.push(arr[i].name)
+      res_int.push((arr[i].value * 100).toFixed(2))
+    }
+    // console.log(res_str);
+    // console.log(res_int);
+    return res_int;
+  }
+
+
   
   onButtonSubmit = () => {
 
@@ -112,10 +129,16 @@ class App extends Component {
     // this will default to the latest version_id
     fetch("https://api.clarifai.com/v2/models/" + MODEL_ID + "/versions/" + MODEL_VERSION_ID + "/outputs", requestOptions)
     .then(response => response.json())
-    .then(result => categ_names = this.getNameAndPercent(result.outputs[0].data.concepts))
+    .then(result => categ_names = this.getNames(result.outputs[0].data.concepts))
     .then(() => this.forceUpdate()) // LET'S GOO. This Forces the rerender
     .catch(error => console.log('error', error));
     
+    fetch("https://api.clarifai.com/v2/models/" + MODEL_ID + "/versions/" + MODEL_VERSION_ID + "/outputs", requestOptions)
+    .then(response => response.json())
+    .then(result => categ_perc = this.getPerc(result.outputs[0].data.concepts))
+    .then(() => this.forceUpdate()) // LET'S GOO. This Forces the rerender
+    .catch(error => console.log('error', error));
+    //    .then(result => categ_perc = this.getPerc(result.outputs[0].data.concepts))
   }
   
   
@@ -137,7 +160,7 @@ class App extends Component {
         onInputChange={this.onInputChange} 
         onButtonSubmit={this.onButtonSubmit}
         />
-        <FaceRecognition imageUrl = {IMAGE_URL} category_names = {categ_names}/>
+        <FaceRecognition imageUrl = {IMAGE_URL} category_names = {categ_names} category_percents = {categ_perc}/>
         <Categories category_names = {categ_names}/>
         <Particles id="tsparticles" />
   {/* {      <Navigation/>
