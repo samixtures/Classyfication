@@ -12,13 +12,13 @@ const FaceRecognition = ({imageUrl, category_names, category_percents}) => {
     return(
         <div className="center ma">
             <div className="absolute mt2">
-                <img alt = 'clarifai image' src = {imageUrl} width='500px' height='auto'/>
+                <img src = {imageUrl} width='500px' height='auto'/>
                 <div className = "center">
-                    <ul className = "list garamond">
+                    <ul className = "list bot_words">
                         <li><h1>CATEGORIES</h1></li>
                         {displayListItems(category_names)}
                     </ul>
-                    <ul className = "list garamond">
+                    <ul className = "list bot_words">
                         <li><h1>ACCURACY</h1></li>
                         {displayListItems(category_percents)}
                     </ul>

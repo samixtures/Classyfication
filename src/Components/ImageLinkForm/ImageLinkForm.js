@@ -4,7 +4,7 @@ import './ImageLinkForm.css'
 const ImageLinkForm = ({onInputChange, onButtonSubmit}) => {
     return(
         <div>
-            <h1>Insert a link to an image</h1>
+            <h1 className = "top_words">Classyficiation</h1>
             <div className="center">
                 <div className="form center pa4 br3 shadow-5">
                     <input className="f4 pa2 w-70 center" type = "text" onChange={onInputChange}/>

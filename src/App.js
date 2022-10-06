@@ -5,8 +5,9 @@ import Logo from './components/Logo/Logo'
 import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm'
 import FaceRecognition from './components/FaceRecognition/FaceRecognition'
 import Particles from './components/Particles'
+import myImage from './insert_image.png'
 
-let IMAGE_URL = 'https://cdn.photographycourse.net/wp-content/uploads/2014/11/Landscape-Photography-steps.jpg';
+let IMAGE_URL;
 
 let categ_names = [];
 let categ_perc = [];
