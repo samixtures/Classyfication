@@ -113,9 +113,8 @@ class App extends Component {
     fetch("https://api.clarifai.com/v2/models/" + MODEL_ID + "/versions/" + MODEL_VERSION_ID + "/outputs", requestOptions)
     .then(response => response.json())
     .then(result => categ_names = this.getNameAndPercent(result.outputs[0].data.concepts))
-    .then(() => console.log(categ_names))
+    .then(() => this.forceUpdate()) // LET'S GOO. This Forces the rerender
     .catch(error => console.log('error', error));
-
     // this.getNameAndPercent(categ_names)
     console.log("categ_names", categ_names);
     
@@ -126,6 +125,9 @@ class App extends Component {
     // For some reason imageUrl and input states are undefined regardless of what code I add anywhere
     // unless I add these few lines below
     const { imageUrl, input } = this.state;
+    if (categ_names.length > 0) {
+      console.log("category names is", categ_names);
+    }
     // console.log("input is", input);
     // console.log("imageUrl is", imageUrl);
     return (
