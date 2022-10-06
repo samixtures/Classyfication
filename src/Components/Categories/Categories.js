@@ -8,7 +8,7 @@ function displayListItems(list) {
 const Categories = ({ category_names }) => {
     return(
         <div>
-            {displayListItems(category_names)}
+            {/* {displayListItems(category_names)} */}
         </div>
     )
 }

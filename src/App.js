@@ -27,7 +27,7 @@ class App extends Component {
     // console.log(IMAGE_URL)
   }
   getNameAndPercent = (arr) => {
-    console.log(arr);
+    // console.log(arr);
     let res_str = [];
     let res_int = [];
     for (let i = 0; i < arr.length; i++) {
@@ -35,8 +35,8 @@ class App extends Component {
       res_str.push(arr[i].name)
       res_int.push(arr[i].value)
     }
-    console.log(res_str);
-    console.log(res_int);
+    // console.log(res_str);
+    // console.log(res_int);
     return res_str;
   }
   
@@ -115,8 +115,6 @@ class App extends Component {
     .then(result => categ_names = this.getNameAndPercent(result.outputs[0].data.concepts))
     .then(() => this.forceUpdate()) // LET'S GOO. This Forces the rerender
     .catch(error => console.log('error', error));
-    // this.getNameAndPercent(categ_names)
-    console.log("categ_names", categ_names);
     
   }
   
@@ -126,7 +124,7 @@ class App extends Component {
     // unless I add these few lines below
     const { imageUrl, input } = this.state;
     if (categ_names.length > 0) {
-      console.log("category names is", categ_names);
+      // console.log("category names is", categ_names);
     }
     // console.log("input is", input);
     // console.log("imageUrl is", imageUrl);

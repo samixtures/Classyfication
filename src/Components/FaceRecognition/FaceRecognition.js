@@ -12,7 +12,9 @@ const FaceRecognition = ({imageUrl, category_names}) => {
         <div className="center ma">
             <div className="absolute mt2">
                 <img alt = 'clarifai image' src = {imageUrl} width='500px' height='auto'/>
-                {displayListItems(category_names)}
+                <div>
+                    {displayListItems(category_names)}
+                </div>
             </div>
         </div>
     );
