@@ -3,10 +3,8 @@ import './App.css';
 import Navigation from './components/Navigation/Navigation'
 import Logo from './components/Logo/Logo'
 import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm'
-import Rank from './components/Rank/Rank'
 import FaceRecognition from './components/FaceRecognition/FaceRecognition'
 import Particles from './components/Particles'
-import Categories from './components/Categories/Categories'
 
 let IMAGE_URL = 'https://cdn.photographycourse.net/wp-content/uploads/2014/11/Landscape-Photography-steps.jpg';
 
@@ -155,13 +153,11 @@ class App extends Component {
       <div className="App">
         <Navigation/>
         <Logo/>
-        <Rank/>
         <ImageLinkForm 
         onInputChange={this.onInputChange} 
         onButtonSubmit={this.onButtonSubmit}
         />
         <FaceRecognition imageUrl = {IMAGE_URL} category_names = {categ_names} category_percents = {categ_perc}/>
-        <Categories category_names = {categ_names}/>
         <Particles id="tsparticles" />
   {/* {      <Navigation/>
         <Logo/>
