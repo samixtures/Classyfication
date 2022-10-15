@@ -18,8 +18,31 @@ class App extends Component {
     this.state = {
       input: '',
       imageUrl: 'https://akm-img-a-in.tosshub.com/indiatoday/images/story/201810/stockvault-person-studying-and-learning---knowledge-concept178241_0.jpeg?yCXmhi7e2ARwUtzHHlvtcrgETnDgFwCK&size=1200:675',
+      imageBytes: '',
     }
   }
+
+
+  loadFile = (event) => {
+    let file = event.target.files[0];
+    console.log("file is", file);
+    function blobToDataURL(blob, callback) {
+        var fileReader = new FileReader();
+        fileReader.onload = function(e) {callback(e.target.result);}
+        fileReader.readAsDataURL(blob);
+      }
+    blobToDataURL(event.target.files[0], (dataurl) => {
+        console.log(dataurl);
+        this.setState({imageBytes: dataurl}, () => {
+          console.log("image bytes", this.state.imageBytes);
+        });
+    });
+  }
+
+  passBytes = (data) => {
+    this.loadFile(data);
+  }
+
   onInputChange = (event) => {
     // console.log(event.target.value);
     this.setState({input: event.target.value});
@@ -157,6 +180,7 @@ class App extends Component {
         <ImageLinkForm 
         onInputChange={this.onInputChange} 
         onButtonSubmit={this.onButtonSubmit}
+        sendBytes = {this.passBytes}
         />
         <FaceRecognition imageUrl = {IMAGE_URL} category_names = {categ_names} category_percents = {categ_perc}/>
         <Particles id="tsparticles" />
