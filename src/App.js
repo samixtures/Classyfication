@@ -12,6 +12,8 @@ let IMAGE_URL;
 let categ_names = [];
 let categ_perc = [];
 
+let isImageURL = true;
+
 class App extends Component {
   constructor() {
     super();
@@ -22,7 +24,6 @@ class App extends Component {
     }
   }
 
-
   loadFile = (event) => {
     let file = event.target.files[0];
     console.log("file is", file);
@@ -32,9 +33,12 @@ class App extends Component {
         fileReader.readAsDataURL(blob);
       }
     blobToDataURL(event.target.files[0], (dataurl) => {
-        console.log(dataurl);
+        // console.log(dataurl);
         this.setState({imageBytes: dataurl}, () => {
-          console.log("image bytes", this.state.imageBytes);
+          // console.log("image bytes", this.state.imageBytes);
+          isImageURL = false;
+          IMAGE_URL = this.state.imageBytes;
+          this.onButtonSubmit();
         });
     });
   }
@@ -78,7 +82,6 @@ class App extends Component {
   }
 
 
-  
   onButtonSubmit = () => {
 
     // I don't understand why these console.logs are undefined unless I do this destructuring process.
@@ -121,7 +124,47 @@ class App extends Component {
     // YOU DO NOT NEED TO CHANGE ANYTHING BELOW THIS LINE TO RUN THIS EXAMPLE
     ///////////////////////////////////////////////////////////////////////////////////
 
-    const raw = JSON.stringify({
+    let raw = JSON.stringify({
+      "user_app_id": {
+          "user_id": USER_ID,
+          "app_id": APP_ID
+      },
+      "inputs": [
+          {
+              "data": {
+                  "image": {
+                      "url": IMAGE_URL
+                  }
+              }
+          }
+      ]
+  });
+
+
+    if (isImageURL === true){
+        raw = JSON.stringify({
+          "user_app_id": {
+              "user_id": USER_ID,
+              "app_id": APP_ID
+          },
+          "inputs": [
+              {
+                  "data": {
+                      "image": {
+                          "url": IMAGE_URL
+                      }
+                  }
+              }
+          ]
+      });
+    }
+
+
+    else {
+      IMAGE_URL = this.state.imageBytes;
+      let new_URL = IMAGE_URL.substring(22);
+      console.log("this the new url", new_URL);
+      raw = JSON.stringify({
         "user_app_id": {
             "user_id": USER_ID,
             "app_id": APP_ID
@@ -130,12 +173,14 @@ class App extends Component {
             {
                 "data": {
                     "image": {
-                        "url": IMAGE_URL
+                        "base64": new_URL
                     }
                 }
             }
         ]
-    });
+      });
+      isImageURL = true;
+    }
 
     const requestOptions = {
         method: 'POST',
@@ -149,6 +194,9 @@ class App extends Component {
     // NOTE: MODEL_VERSION_ID is optional, you can also call prediction with the MODEL_ID only
     // https://api.clarifai.com/v2/models/{YOUR_MODEL_ID}/outputs
     // this will default to the latest version_id
+
+    console.log("Hello from buttonSubmit", this.state.imageBytes);
+
     fetch("https://api.clarifai.com/v2/models/" + MODEL_ID + "/versions/" + MODEL_VERSION_ID + "/outputs", requestOptions)
     .then(response => response.json())
     .then(result => categ_names = this.getNames(result.outputs[0].data.concepts))
