@@ -24,6 +24,14 @@ class App extends Component {
     }
   }
 
+  removeUntilComma = (arr) => {
+    while (arr[0]!=',') {
+      arr = arr.substring(1);
+    }
+    arr = arr.substring(1);
+    return arr;
+  }
+
   loadFile = (event) => {
     let file = event.target.files[0];
     console.log("file is", file);
@@ -162,7 +170,7 @@ class App extends Component {
 
     else {
       IMAGE_URL = this.state.imageBytes;
-      let new_URL = IMAGE_URL.substring(22);
+      let new_URL = this.removeUntilComma(IMAGE_URL);
       console.log("this the new url", new_URL);
       raw = JSON.stringify({
         "user_app_id": {
